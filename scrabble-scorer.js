@@ -2,6 +2,7 @@
 
 const input = require("readline-sync");
 
+const voewls = ['A', 'E', 'I', 'O', 'U'];
 const oldPointStructure = {
   1: ['A', 'E', 'I', 'O', 'U', 'L', 'N', 'R', 'S', 'T'],
   2: ['D', 'G'],
@@ -15,7 +16,7 @@ const oldPointStructure = {
 function oldScrabbleScorer(word) {
 	word = word.toUpperCase();
 	let letterPoints = "";
- 
+  //console.log("d")
 	for (let i = 0; i < word.length; i++) {
  
 	  for (const pointValue in oldPointStructure) {
@@ -33,25 +34,57 @@ function oldScrabbleScorer(word) {
 // don't change the names or your program won't work as expected. //
 
 function initialPrompt() {
-   console.log("Let's play some scrabble! Enter a word:");
+   return input.question("Let's play some scrabble! Enter a word: ");
 };
 
-let simpleScore;
+let simpleScore = {
+  name: 'Simple Score',
+  description: 'Each letter is worth 1 point.', 
+  scorerFunction: function(word){
+  return word.length;
+}
+};
 
-let vowelBonusScore;
 
-let scrabbleScore;
+let vowelBonusScore = {
+  name: 'Bonus Vowels',
+  descripton: 'Vowels are 3 pts, consonants are 1 pt.',
+  scorerFunction: function(word){
+  let pointsReport = "";
+    for(let i = 0; i < word.length; i++){
+      if(voewls.indexOf(word[i]) > -1){
+        pointsReport += `Points for  ${word[i]} : 3\n`;
+      } else{
+        pointsReport += `Points for ${word[i]} : 1\n`
+      };
+    }
+    return pointsReport;
+  }
 
-const scoringAlgorithms = [];
+  
+};
 
-function scorerPrompt() {}
+let scrabbleScore = {
+  name: 'Scrabble',
+  description: 'The traditional scoring algorithm.',
+  scorerFunction: function(word){return oldScrabbleScorer(word);
+}};
+
+const scoringAlgorithms = [simpleScore, vowelBonusScore, scrabbleScore];
+
+function scorerPrompt() {
+  let useSelection = input.question(`Which scoring algorithm would you like to use?\n0 - Simple: One point per character\n1 - Vowel Bonus: Vowels are worth 3 points\n2 - Scrabble: Uses scrabble point system\nEnter 0, 1, or 2: `);
+
+};
 
 function transform() {};
 
 let newPointStructure;
 
 function runProgram() {
-   initialPrompt();
+   let word = initialPrompt().toUpperCase();
+   scorerPrompt();
+   console.log(scrabbleScore.scorerFunction(word));
    
 }
 
