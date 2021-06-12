@@ -34,7 +34,7 @@ function oldScrabbleScorer(word) {
 // don't change the names or your program won't work as expected. //
 
 function initialPrompt() {
-   let userSelection = input.question(`Which scoring algorithm would you like to use?\n0 - Simple: One point per character\n1 - Vowel Bonus: Vowels are worth 3 points\n2 - Scrabble: Uses scrabble point system\nEnter 0, 1, or 2: `);
+   let userSelection = input.question(`Which scoring algorithm would you like to use?\n0 - Scrabble: The traditional scoring algorithm.\n1 - Simple Score: Each letter is worth 1 point.\n2 - Bonus Vowels: Vowels are worth 3 pts, and consonants are 1 pt.\nEnter 0, 1, or 2: `);
 
   while(userSelection > 2 || userSelection < 0){
     userSelection = input.question(`Please enter 0, 1, or 2`);
@@ -88,10 +88,10 @@ let scrabbleScoreObj = {
   scorerFunction: scrabbleScore
   };
 
-const scoringAlgorithms = [simpleScoreObj, vowelBonusScoreObj, scrabbleScoreObj];
+const scoringAlgorithms = [scrabbleScoreObj, simpleScoreObj, vowelBonusScoreObj];
 
 function scorerPrompt() {
-  let userSelection = input.question(`Which scoring algorithm would you like to use?\n0 - Simple: One point per character\n1 - Vowel Bonus: Vowels are worth 3 points\n2 - Scrabble: Uses scrabble point system\nEnter 0, 1, or 2: `);
+  let userSelection = input.question(`Which scoring algorithm would you like to use?\n0 - Scrabble: The traditional scoring algorithm.\n1 - Simple Score: Each letter is worth 1 point.\n2 - Bonus Vowels: Vowels are worth 3 pts, and consonants are 1 pt.\nEnter 0, 1, or 2: `);
 
   while(userSelection > 2 || userSelection < 0){
     userSelection = input.question(`Please enter 0, 1, or 2`);
