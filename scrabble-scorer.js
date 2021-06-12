@@ -41,7 +41,9 @@ function initialPrompt() {
   }
   return scoringAlgorithms[userSelection];
 };
-
+function scorerPrompt(){
+  //just used inital prompt?
+}
 function simpleScore(word){
   return word.length;
 };
@@ -49,7 +51,7 @@ function simpleScore(word){
 let simpleScoreObj = {
   name: 'Simple Score',
   description: 'Each letter is worth 1 point.', 
-  scorerFunction: simpleScore
+  scoringFunction: simpleScore
 };
 
 function vowelBonusScore(word){
@@ -70,7 +72,7 @@ function vowelBonusScore(word){
 let vowelBonusScoreObj = {
   name: 'Bonus Vowels',
   descripton: 'Vowels are 3 pts, consonants are 1 pt.',
-  scorerFunction: vowelBonusScore
+  scoringFunction: vowelBonusScore
 };
 function scrabbleScore(word, pointStructure){
     let gradedWord = word.toLowerCase();
@@ -85,20 +87,12 @@ function scrabbleScore(word, pointStructure){
 let scrabbleScoreObj = {
   name: 'Scrabble',
   description: 'The traditional scoring algorithm.',
-  scorerFunction: scrabbleScore
+  scoringFunction: scrabbleScore
   };
 
 const scoringAlgorithms = [scrabbleScoreObj, simpleScoreObj, vowelBonusScoreObj];
 
-console.log(scoringAlgorithms);
-function scorerPrompt() {
-  let userSelection = input.question(`Which scoring algorithm would you like to use?\n0 - Scrabble: The traditional scoring algorithm.\n1 - Simple Score: Each letter is worth 1 point.\n2 - Bonus Vowels: Vowels are worth 3 pts, and consonants are 1 pt.\nEnter 0, 1, or 2: `);
-
-  while(userSelection > 2 || userSelection < 0){
-    userSelection = input.question(`Please enter 0, 1, or 2`);
-  }
-  return scoringAlgorithms[userSelection];
-};
+//console.log(scoringAlgorithms);
 
 function transform(oldPointStructure) {
   let newPointStructure = {};
@@ -122,11 +116,11 @@ function runProgram(scoringAlgorithms) {
    while(word.toLowerCase() !== 'stop'){
      word = input.question("Enter a word to be scored, or 'Stop' to quit: ");
      if(word.toLowerCase() !== 'stop'){
-       console.log(`Score for '${word}': ${scoreMode.scorerFunction(word.toLowerCase(), newPointStructure)}`);
+       console.log(`Score for '${word}': ${scoreMode.scoringFunction(word.toLowerCase(), newPointStructure)}`);
      }
    }
    
-   //console.log(scrabbleScore.scorerFunction(word));
+   //console.log(scrabbleScore.scoringFunction(word));
    
 }
 
