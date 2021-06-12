@@ -34,7 +34,12 @@ function oldScrabbleScorer(word) {
 // don't change the names or your program won't work as expected. //
 
 function initialPrompt() {
-   return input.question("Let's play some scrabble! Enter a word: ");
+   let userSelection = input.question(`Which scoring algorithm would you like to use?\n0 - Simple: One point per character\n1 - Vowel Bonus: Vowels are worth 3 points\n2 - Scrabble: Uses scrabble point system\nEnter 0, 1, or 2: `);
+
+  while(userSelection > 2 || userSelection < 0){
+    userSelection = input.question(`Please enter 0, 1, or 2`);
+  }
+  return scoringAlgorithms[userSelection];
 };
 
 function simpleScore(word){
@@ -48,16 +53,19 @@ let simpleScoreObj = {
 };
 
 function vowelBonusScore(word){
-  let pointsReport = "";
+  //let pointsReport = "";
+  let points = 0;
     for(let i = 0; i < word.length; i++){
       if(voewls.indexOf(word[i]) > -1){
-        pointsReport += `Points for  ${word[i]} : 3\n`;
+        //pointsReport += `Points for  ${word[i]} : 3\n`;
+        points += 3;
       } else{
-        pointsReport += `Points for ${word[i]} : 1\n`
+        //pointsReport += `Points for ${word[i]} : 1\n`
+        points = points += 1;
       };
     }
-    return pointsReport;
-
+    //return pointsReport;
+  return points;
 };
 let vowelBonusScoreObj = {
   name: 'Bonus Vowels',
@@ -105,11 +113,18 @@ function transform(oldPointStructure) {
 
 let newPointStructure = transform(oldPointStructure);
 
-function runProgram() {
+function runProgram(scoringAlgorithms) {
   //console.log(transform(oldPointStructure));
-   let word = initialPrompt();
-   let scoreMode = scorerPrompt();
-   console.log(`Score for '${word}': ${scoreMode.scorerFunction(word.toUpperCase(), newPointStructure)}`);
+   //let word = initialPrompt(); 
+   let scoreMode = initialPrompt();
+   let word = '';
+   while(word.toLowerCase() !== 'stop'){
+     word = input.question("Enter a word to be scored, or 'Stop' to quit: ");
+     if(word.toLowerCase() !== 'stop'){
+       console.log(`Score for '${word}': ${scoreMode.scorerFunction(word.toLowerCase(), newPointStructure)}`);
+     }
+   }
+   
    //console.log(scrabbleScore.scorerFunction(word));
    
 }
