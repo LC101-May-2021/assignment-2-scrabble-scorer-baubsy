@@ -108,7 +108,7 @@ function transform(oldPointStructure) {
       newPointStructure[oldPointStructure[letter][i].toLowerCase()] = Number(letter);
     }
   }
-  newPointStructure[' '] = 0;
+  //newPointStructure[' '] = 0;
   return newPointStructure;
 };
 
