@@ -103,7 +103,7 @@ function transform(oldPointStructure) {
 let newPointStructure = transform(oldPointStructure);
 
 function runProgram() {
-  console.log(transform(oldPointStructure));
+  //console.log(transform(oldPointStructure));
    let word = initialPrompt();
    let scoreMode = scorerPrompt();
    console.log(`Score for '${word}': ${scoreMode.scorerFunction(word.toUpperCase(), newPointStructure)}`);
