@@ -67,24 +67,47 @@ let vowelBonusScore = {
 let scrabbleScore = {
   name: 'Scrabble',
   description: 'The traditional scoring algorithm.',
-  scorerFunction: function(word){return oldScrabbleScorer(word);
+  scorerFunction: function(word, pointStructure){
+    let gradedWord = word.toLowerCase();
+    let points = 0;
+
+    for(let i = 0; i < gradedWord.length; i++){
+      points = points + pointStructure[gradedWord[i]];
+    }
+    return points;
 }};
 
 const scoringAlgorithms = [simpleScore, vowelBonusScore, scrabbleScore];
 
 function scorerPrompt() {
-  let useSelection = input.question(`Which scoring algorithm would you like to use?\n0 - Simple: One point per character\n1 - Vowel Bonus: Vowels are worth 3 points\n2 - Scrabble: Uses scrabble point system\nEnter 0, 1, or 2: `);
+  let userSelection = input.question(`Which scoring algorithm would you like to use?\n0 - Simple: One point per character\n1 - Vowel Bonus: Vowels are worth 3 points\n2 - Scrabble: Uses scrabble point system\nEnter 0, 1, or 2: `);
 
+  while(userSelection > 2 || userSelection < 0){
+    userSelection = input.question(`Please enter 0, 1, or 2`);
+  }
+  return scoringAlgorithms[userSelection];
 };
 
-function transform() {};
+function transform(oldPointStructure) {
+  let newPointStructure = {};
 
-let newPointStructure;
+  for(letter in oldPointStructure){
+    for(let i = 0; i < oldPointStructure[letter].length; i++){
+      newPointStructure[oldPointStructure[letter][i].toLowerCase()] = Number(letter);
+    }
+  }
+  newPointStructure[' '] = 0;
+  return newPointStructure;
+};
+
+let newPointStructure = transform(oldPointStructure);
 
 function runProgram() {
-   let word = initialPrompt().toUpperCase();
-   scorerPrompt();
-   console.log(scrabbleScore.scorerFunction(word));
+  console.log(transform(oldPointStructure));
+   let word = initialPrompt();
+   let scoreMode = scorerPrompt();
+   console.log(`Score for '${word}': ${scoreMode.scorerFunction(word.toUpperCase(), newPointStructure)}`);
+   //console.log(scrabbleScore.scorerFunction(word));
    
 }
 
