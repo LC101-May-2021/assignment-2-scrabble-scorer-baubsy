@@ -2,7 +2,7 @@
 
 const input = require("readline-sync");
 
-const voewls = ['A', 'E', 'I', 'O', 'U'];
+const voewls = ['a', 'e', 'i', 'o', 'u'];
 const oldPointStructure = {
   1: ['A', 'E', 'I', 'O', 'U', 'L', 'N', 'R', 'S', 'T'],
   2: ['D', 'G'],
@@ -90,6 +90,7 @@ let scrabbleScoreObj = {
 
 const scoringAlgorithms = [scrabbleScoreObj, simpleScoreObj, vowelBonusScoreObj];
 
+console.log(scoringAlgorithms);
 function scorerPrompt() {
   let userSelection = input.question(`Which scoring algorithm would you like to use?\n0 - Scrabble: The traditional scoring algorithm.\n1 - Simple Score: Each letter is worth 1 point.\n2 - Bonus Vowels: Vowels are worth 3 pts, and consonants are 1 pt.\nEnter 0, 1, or 2: `);
 
